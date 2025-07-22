@@ -13,3 +13,5 @@ For collaborations or audit requests, feel free to reach out on X (formerly Twit
 | -------- | ------- |  -------- | -------- | 
 | [Mighty Finance](https://cantina.xyz/competitions/616d8bb4-16ce-4ca9-9ce9-5b99d6e146ef) | Liquidity Management | Solidity | [link](competitive-audits/cantina/MightyFinance.md) |
 | [Jigsaw Finance](https://cantina.xyz/competitions/7a40c849-0b35-4128-b084-d9a83fd533ea) | CDP | Solidity | [link](competitive-audits/cantina/JigsawFinance.md) |
+| [Alchemix-v3](https://cantina.xyz/competitions/e68909e6-3491-4a94-a707-ecf0c89cf72a) | CDP | Solidity | [link](competitive-audits/cantina/Alchemix-v3.md) |
+
