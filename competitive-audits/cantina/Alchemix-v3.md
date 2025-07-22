@@ -380,5 +380,101 @@ Consider implementing the following changes in `AlchemixV3::_liquidate` function
 ```
 
 
+## [H-5] Incorrect Protocol Fee Amount Transferred to `protocolFeeReceiver`
+
+## Summary
+In the `AlchemistV3::repay` function, the total amount of `yieldTokens` repaid by the user is incorrectly transferred as protocol fee to the `protocolFeeReceiver`.
+
+## Description 
+According to the protocol design, only a specific percentage of the repaid `yieldTokens` should be collected as protocol fee. However, in the `AlchemistV3::repay` function, the entire amount of `yieldTokens` repaid by the user is transferred to the `protocolFeeReceiver`, resulting in the protocol retaining fewer tokens than intended.
+
+The issue can be seen in this code snippet below:
+
+```solidity
+    function repay(uint256 amount, uint256 recipientTokenId) public returns (uint256) {
+        ...
+        uint256 earmarkToRemove = credit > account.earmarked ? account.earmarked : credit;
+        account.earmarked -= earmarkToRemove;
+
+        // Debt is subject to protocol fee similar to redemptions
+        account.collateralBalance -= (creditToYield * protocolFee) / BPS;
+        _subDebt(recipientTokenId, credit);
+
+        // Transfer the repaid tokens to the transmuter.
+        TokenUtils.safeTransferFrom(yieldToken, msg.sender, transmuter, creditToYield);
+@>      TokenUtils.safeTransfer(yieldToken, protocolFeeReceiver, creditToYield);
+        ...
+    }
+```
+While the correct protocol fee is deducted from the user's collateral, an incorrect amount is sent to the `protocolFeeReceiver` as protocol fee.
+
+## Impact Explanation 
+This issue causes the protocol to be left with no `yieldToken`s, as the full repayment amount is sent to the `protocolFeeReceiver` as protocol fee. Consequently, the protocol’s `yieldToken` balance is lower than expected, which could negatively impact liquidity, accounting, and the overall stability of the protocol.
+
+## Likelihood Explanation 
+This issue arises from a direct misallocation of the protocol fee in the `AlchemistV3::repay` function. Hence, can be triggered during normal operation whenever users repay debt, making it highly likely to occur.
+
+## Proof of Concept
+- Add the following code to AlchemistV3.t.sol file and run the forge test
+
+```solidity
+    function test_IncorrectFeeAmountSentToProtocolFeeReceiver() external {
+        // initialize bob's wallet with 10_000 yield tokens
+        address bob = makeAddr("bob");
+        uint256 _depositAmount = 5000e18;
+        uint256 _borrowAmount = 4000e18;
+        deal(address(fakeYieldToken), bob, 10000e18);
+
+        vm.prank(alOwner);
+        alchemist.setProtocolFee(500); // 10%
+
+        // bob deposits yield tokens and borrows debt tokens
+        vm.startPrank(bob);
+        SafeERC20.safeApprove(address(fakeYieldToken), address(alchemist), type(uint256).max);
+        alchemist.deposit(_depositAmount, bob, 0);
+        uint256 tokenId = AlchemistNFTHelper.getFirstTokenId(bob, address(alchemistNFT));
+        alchemist.mint(tokenId, _borrowAmount, bob);
+
+        // repay debt with yield tokens
+        vm.roll(block.number + 10);
+        uint256 repaymentAmount = alchemist.repay(_depositAmount, tokenId);
+        vm.stopPrank();
+
+        // calculate expected protocol fee
+        uint256 expectedProtocolFee = (repaymentAmount * (alchemist.protocolFee())) / 10000;
+
+        uint256 balanceOfTransmuter = fakeYieldToken.balanceOf(address(transmuterLogic));
+        uint256 balanceOfProtocolFeeReceiver = fakeYieldToken.balanceOf(alchemist.protocolFeeReceiver());
+
+        console.log("balance of Transmuter: ", balanceOfTransmuter);
+        console.log("balance of ProtocolFeeReceiver: ", balanceOfProtocolFeeReceiver);
+        console.log("expected protocol fee: ", expectedProtocolFee);
+
+        // confirm that the wrong amount was sent to the protocol fee receiver
+        assertEq(balanceOfTransmuter, balanceOfProtocolFeeReceiver);
+        assert(balanceOfProtocolFeeReceiver != expectedProtocolFee);
+    }
+```
+
+## Recommendation 
+Update the `AlchemistV3::repay` function to correctly transfer only the calculated protocol fee to the `protocolFeeReceiver`:
+
+```diff
+    function repay(uint256 amount, uint256 recipientTokenId) public returns (uint256) {
+        ...
+        account.collateralBalance -= (creditToYield * protocolFee) / BPS;
+        _subDebt(recipientTokenId, credit);
+
+        // Transfer the repaid tokens to the transmuter.
+        TokenUtils.safeTransferFrom(yieldToken, msg.sender, transmuter, creditToYield);
+
+-       TokenUtils.safeTransfer(yieldToken, protocolFeeReceiver, creditToYield);
++       TokenUtils.safeTransfer(yieldToken, protocolFeeReceiver, (creditToYield * protocolFee) / BPS);
+
+    }
+```
 
 
+**Severity**: Informational 
+
+## [I-1] 
