@@ -1,4 +1,6 @@
-# Denial of Service (Dos) via Donation Attack By First Depositor
+**Severity**: High
+
+# [H-1] Denial of Service (Dos) via Donation Attack By First Depositor
 
 ## Summary
 In the `SuccinctStaking::stake` function, the initial depositor can artificially inflate the share price by staking the minimum allowed amount and then donating a large quantity of $PROVE tokens, leading to denial of service (DoS) for other users. 
