@@ -1,6 +1,6 @@
 ## About Me
 
-Hi! I'm an independent Smart Contract Security Researcher, currently active in competitive audits on platforms like [Cantina](https://cantina.xyz/u/Kemah), and [Sherlock](https://audits.sherlock.xyz/watson/0xKemah). I'm passionate about improving the security of Web3 by identifying and reporting vulnerabilities in blockchain protocols.
+Hi! I'm an independent Smart Contract Security Researcher, currently active in competitive audits on platforms like [Cantina](https://cantina.xyz/u/Kemah) and [Sherlock](https://audits.sherlock.xyz/watson/0xKemah). I'm passionate about improving the security of Web3 by identifying and reporting vulnerabilities in blockchain protocols.
 
 For collaborations or audit requests, feel free to reach out on X (formerly Twitter) [@0xKemah](https://x.com/0xKemah) | Telegram [@Oxkemah](https://t.me/OxKemah).
 
