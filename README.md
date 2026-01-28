@@ -14,4 +14,6 @@ For collaborations or audit requests, feel free to reach out on X (formerly Twit
 | [Mighty Finance](https://cantina.xyz/competitions/616d8bb4-16ce-4ca9-9ce9-5b99d6e146ef) | Liquidity Management | Solidity | [link](competitive-audits/cantina/MightyFinance.md) |
 | [Jigsaw Finance](https://cantina.xyz/competitions/7a40c849-0b35-4128-b084-d9a83fd533ea) | CDP | Solidity | [link](competitive-audits/cantina/JigsawFinance.md) |
 | [Alchemix-v3](https://cantina.xyz/competitions/e68909e6-3491-4a94-a707-ecf0c89cf72a) | CDP | Solidity | [link](competitive-audits/cantina/Alchemix-v3.md) |
-
+| [Succinct Network](https://cantina.xyz/code/bd882748-077e-4e55-853f-f8df70109dbb/overview) | Staking & Governance | Solidity | [link](competitive-audits/cantina/succinct-network.md) |
+| [Pike Market Protocol](https://cantina.xyz/code/a0806644-7d91-457a-a08d-aee2db73f352/overview) | Lending and Borrowing | Solidity | [link](competitive-audits/cantina/pike-tapio-monrepo.md) |
+| [Kuru](https://cantina.xyz/code/cdce21ba-b787-4df4-9c56-b31d085388e7/overview) | CLOB Protocol | Solidity | [link](competitive-audits/cantina/kuru-contracts.md) |
