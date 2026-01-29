@@ -17,3 +17,11 @@ For collaborations or audit requests, feel free to reach out on X (formerly Twit
 | [Succinct Network](https://cantina.xyz/code/bd882748-077e-4e55-853f-f8df70109dbb/overview) | Staking & Governance | Solidity | [link](competitive-audits/cantina/succinct-network.md) |
 | [Pike Market Protocol](https://cantina.xyz/code/a0806644-7d91-457a-a08d-aee2db73f352/overview) | Lending and Borrowing | Solidity | [link](competitive-audits/cantina/pike-tapio-monrepo.md) |
 | [Kuru](https://cantina.xyz/code/cdce21ba-b787-4df4-9c56-b31d085388e7/overview) | CLOB Protocol | Solidity | [link](competitive-audits/cantina/kuru-contracts.md) |
+
+
+### Sherlock
+| Contest | Category | Language | Report |
+| -------- | ------- |  -------- | -------- | 
+| [Notional Exponent](https://audits.sherlock.xyz/contests/1001) | Leveraged Yield Protocol | Solidity | [link](competitive-audits/sherlock/NotionalExponent.md) |
+| [Ammplify](https://audits.sherlock.xyz/contests/1054) | AMM Liquidity Management | Solidity | [link](competitive-audits/sherlock/Ammplify.md) |
+| [stNXM](https://audits.sherlock.xyz/contests/1203) | Liquid Staking | Solidity | [link](competitive-audits/sherlock/stNXM.md) |
